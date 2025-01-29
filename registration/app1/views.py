@@ -1,6 +1,6 @@
 from django.shortcuts import render,HttpResponse,redirect
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate,login
+from django.contrib.auth import authenticate,login,logout
 
 # Create your views here.
 
@@ -35,7 +35,14 @@ def LoginPage(request):
         if user is not None:
             login(request,user)
             return redirect('home')
+        else:
+            return HttpResponse("Username or Password Is Incorrect!")
     return render(request,'login.html')
+
+def LogoutPage(request):
+        logout(request)
+        return redirect('login')
+       
 
 
 
