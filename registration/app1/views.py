@@ -2,6 +2,8 @@ from django.shortcuts import render,HttpResponse,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+
 
 # Create your views here.
 @login_required(login_url='login')
@@ -17,7 +19,9 @@ def SignupPage(request):
         pass2=request.POST.get('password2')
         
         if pass1 != pass2:
-            return HttpResponse("Your Password & Confirm Password Are Not Same!!!")
+            messages.error(request, f"Your Password & Confirm Password Are Not Same!!!")
+            return redirect('signup')
+            # return HttpResponse("Your Password & Confirm Password Are Not Same!!!")
         else:            
             my_user=User.objects.create_user(uname,email,pass1)
             my_user.save()
@@ -29,16 +33,22 @@ def SignupPage(request):
     
 
 def LoginPage(request):
-    if request.method=='POST':
-        username=request.POST.get('username')
-        pass1=request.POST.get('pass')
-        user=authenticate(request,username=username,password=pass1)
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        pass1 = request.POST.get('pass')
+        print(f"username : {username} \npassword : {pass1}")
+        user = authenticate(request, username=username, password=pass1)
+        
         if user is not None:
-            login(request,user)
+            # print('Test1')
+            login(request, user)
             return redirect('home')
         else:
-            return HttpResponse("Username or Password Is Incorrect!")
-    return render(request,'login.html')
+            # Add an error message to display in the pop-up
+            messages.error(request, f"Username or Password is Incorrect!")
+            # return render(request, 'login.html')
+    
+    return render(request, 'login.html')
 
 def LogoutPage(request):
         logout(request)
