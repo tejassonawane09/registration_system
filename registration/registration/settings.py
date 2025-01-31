@@ -22,6 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-t970#-k)=bleyyr=a^i(0+j631lxq_y$r(=pog5ms!h&5qzvtq'
 
+# settings.py
+AUTH_USER_MODEL = 'app1.CustomUser'
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -74,10 +78,26 @@ WSGI_APPLICATION = 'registration.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+
+# this first database:
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+
+#created the new database:
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'registration_new',  # Name of your MySQL database
+        'USER': 'root',  # Your MySQL username
+        'PASSWORD': 'tejas3109',  # Your MySQL password
+        'HOST': 'localhost',  # Your MySQL host (usually localhost)
+        'PORT': '3306',  # Default MySQL port
     }
 }
 
